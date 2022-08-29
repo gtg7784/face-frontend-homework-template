@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 
 export default function Home() {
   // 아래 nodeUrl을 과제 문서에 설명된 노드의 주소로 세팅해주세요.
-  const nodeUrl = "";
+  const nodeUrl = "https://ropsten.infura.io/v3/2a4f59ea8b174fb7ae9ed6fae1137e59";
   if (nodeUrl === "") {
     throw new Error("과제 문서를 보고 nodeUrl 값을 채워주세요.");
   }
