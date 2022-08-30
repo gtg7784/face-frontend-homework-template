@@ -13,6 +13,7 @@ const theme = {
       pale: '#919DB6',
       main: '#3A4044',
       sub: '#748089',
+      dark: '#060607',
     },
     mediumgrey: {
       main: '#D9E0E5',
