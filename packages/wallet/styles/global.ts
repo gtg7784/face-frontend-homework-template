@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
   * {
     font-family: 'Inter', sans-serif;
     font-size: 16px;
+    box-sizing: border-box;
   }
   html, body, #__next, #root {
     margin: 0;
