@@ -1,7 +1,11 @@
 import React from "react"; 
 import { ThemeProvider } from "styled-components";
+import { Provider as ReduxProvider } from 'react-redux'
 import GlobalStyle from "../styles/global"; 
 import theme from '../styles/theme';
+import { makeStore } from '../store';
+
+const store = makeStore();
 
 export const decorators = [
   (Story) => (
@@ -9,10 +13,12 @@ export const decorators = [
       <head>
         <link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
       </head>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Story />
-      </ThemeProvider>
+      <ReduxProvider store={store}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Story />
+        </ThemeProvider>
+      </ReduxProvider>
     </>
   )
 ];
