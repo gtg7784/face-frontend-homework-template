@@ -12,5 +12,5 @@ const Template: ComponentStory<typeof Badge> = (args) => <Badge {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   text: 'Badge',
-  isComplete: false,
+  isValid: false,
 };
