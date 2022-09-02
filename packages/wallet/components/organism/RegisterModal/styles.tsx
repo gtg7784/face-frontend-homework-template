@@ -18,7 +18,6 @@ export const SubTitle = styled.p`
   ${textStyle.body2Regular}
   color: ${({ theme }) => theme.colors.bluegrey.main};
   margin: 0;
-  letter-spacing: 0.005em;
 `;
 
 export const SecuredByContainer = styled.div`
