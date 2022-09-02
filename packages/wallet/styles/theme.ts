@@ -27,6 +27,12 @@ const theme = {
       main: '#195DEE',
       pale: '#F0F5FF',
     },
+    red: {
+      dark: '#E61244',
+    },
+    green: {
+      main: '#05A67B',
+    },
   },
   evaluation: {
     level5: '0px 10px 15px rgba(54, 62, 76, 0.3), 0px 10px 15px rgba(54, 62, 76, 0.1), 0px 15px 40px rgba(54, 62, 76, 0.2)',
