@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as textStyle from 'styles/text';
 
 interface IProps {
   text: string;
@@ -12,13 +13,11 @@ const Badge = ({ text, isValid }: IProps) => (
 );
 
 const Container = styled.div<{ isValid: boolean }>`
+  ${textStyle.captionMedium}
   padding: 4px 6px;
   border-radius: 4px;
   width: fit-content;
   height: fit-content;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
   background: ${({ isValid, theme }) => (
     isValid
       ? theme.colors.primary.pale

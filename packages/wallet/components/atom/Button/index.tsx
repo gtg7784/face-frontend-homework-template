@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import styled, { keyframes } from 'styled-components';
 import SyncIcon from '@mui/icons-material/Sync';
+import * as textStyle from 'styles/text';
 
 interface IProps {
   isLoading?: boolean;
@@ -31,9 +32,7 @@ const Container = styled.button`
   height: 52px;
   border-radius: 4px;
   border: none;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
+  ${textStyle.h5}
   background-color: ${({ theme }) => theme.colors.primary.main};
   color: ${({ theme }) => theme.colors.white};
 

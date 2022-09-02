@@ -1,26 +1,41 @@
 import styled from 'styled-components';
-import { PropsWithChildren } from 'react';
+import { forwardRef, PropsWithChildren } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import * as textStyle from 'styles/text';
 
-interface IProps {
+interface IProps extends Omit<UseFormRegisterReturn, 'ref'> {
   disabled?: boolean;
   value?: string;
   placeholder?: string;
+  type?: string;
+  className?: string;
+  onClick?: () => void;
 }
 
-const Input = ({
+const Input = forwardRef<HTMLInputElement, PropsWithChildren<IProps>>(({
   value,
   placeholder,
   disabled = false,
+  type = 'text',
   children,
+  onClick,
+  className,
   ...props
-}: PropsWithChildren<IProps>) => (
-  <Container {...props} disabled={disabled}>
-    <StyledInput value={value} placeholder={placeholder} disabled={disabled} />
+}, ref) => (
+  <Container className={className} disabled={disabled} onClick={onClick}>
+    <StyledInput
+      ref={ref}
+      type={type}
+      value={value}
+      placeholder={placeholder}
+      disabled={disabled}
+      {...props}
+    />
     <RightSection>
       {children}
     </RightSection>
   </Container>
-);
+));
 
 const Container = styled.div<{ disabled: boolean }>`
   position: relative;
@@ -32,8 +47,7 @@ const StyledInput = styled.input`
   width: 100%;
   height: 54px;
   border-radius: 4px;
-  font-weight: 400;
-  font-size: 16px;
+  ${textStyle.body1Regular}
   color: ${({ theme }) => theme.colors.darkgrey.main};
   border: ${({ theme }) => `1px solid ${theme.colors.mediumgrey.main}`};
   padding: 0 ${({ theme }) => theme.spacing.small['3']};
@@ -50,6 +64,7 @@ const StyledInput = styled.input`
   :disabled {
     height: 38px;
     border: 0;
+    ${textStyle.body2Medium}
     background-color: ${({ theme }) => theme.colors.bluegrey.pale};
     color: ${({ theme }) => theme.colors.bluegrey.sub};
   }
