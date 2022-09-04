@@ -30,7 +30,6 @@ export const body1Regular = css`
 `;
 
 export const body2Regular = css`
-  width: 100%;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
