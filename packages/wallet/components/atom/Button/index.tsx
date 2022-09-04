@@ -18,7 +18,7 @@ const Button = ({
     disabled={disabled || isLoading}
     {...props}
   >
-    {isLoading && (<StyledSyncIcon width={20} height={20} />)}
+    {isLoading && (<StyledSyncIcon />)}
     {children}
   </Container>
 );
@@ -54,6 +54,8 @@ const rotate = keyframes`
 `;
 
 const StyledSyncIcon = styled(SyncIcon)`
+  width: 20px !important;
+  height: 20px !important;
   animation: ${rotate} 1s linear infinite;
   margin-right: ${({ theme }) => theme.spacing.small['2']};
   color: ${({ theme }) => theme.colors.primary.main};

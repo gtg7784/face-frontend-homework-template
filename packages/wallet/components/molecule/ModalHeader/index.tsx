@@ -44,8 +44,8 @@ const CloseButton = styled.button`
 `;
 
 const StyledCloseIcon = styled(CloseIcon)`
-  width: 24px;
-  height: 24px;
+  width: 24px !important;
+  height: 24px !important;
   color: ${({ theme }) => theme.colors.darkgrey.light};
 `;
 

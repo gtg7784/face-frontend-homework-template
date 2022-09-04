@@ -58,14 +58,14 @@ export const StyledButton = styled(Button)`
 `;
 
 export const StyledEditIcon = styled(EditIcon)`
-  width: 16px;
-  height: 16px;
+  width: 16px !important;
+  height: 16px !important;
   color: ${({ theme }) => theme.colors.bluegrey.sub};
 `;
 
 export const StyledVisibilityIcon = styled(VisibilityIcon)`
-  width: 16px;
-  height: 16px;
+  width: 16px !important;
+  height: 16px !important;
   color: ${({ theme }) => theme.colors.bluegrey.dark};
 `;
 
