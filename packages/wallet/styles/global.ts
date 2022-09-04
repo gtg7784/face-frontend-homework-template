@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
+  ${reset}
   * {
     font-family: 'Inter', sans-serif;
     font-size: 16px;
