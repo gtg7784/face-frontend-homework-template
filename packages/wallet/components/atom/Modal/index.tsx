@@ -35,7 +35,6 @@ const StyledContentElement = styled.div`
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  overflow: auto;
   border-radius: 16px;
   outline: none;
   padding: 36px; // design system 기준 spacing 몇인지 모르겠음

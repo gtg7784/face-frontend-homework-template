@@ -33,8 +33,9 @@ const Message = styled.div`
   left: 50%;
   transform: ${({ theme }) => `translate(-50%, calc(-100% - ${theme.spacing.small['1']}))`};
   text-overflow: ellipsis;
-  white-space: nowrap;
   border-radius: 4px;
+  white-space: pre;
+  z-index: 9999;
   ${textStyle.captionMedium}
   padding: ${({ theme }) => `6px ${theme.spacing.small['2']}`};
   background: ${({ theme }) => theme.colors.darkgrey.main};
