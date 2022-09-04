@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 type ModalState = {
   registerStage: 'login' | 'verification' | 'password' | 'success' | null,
-  transactionStage: 'confirm' | 'success' | null,
+  transactionStage: 'send' | 'processing' | 'complete' | null,
 }
 
 const initialState: ModalState = {
