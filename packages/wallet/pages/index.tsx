@@ -11,10 +11,11 @@ import { RegisterFields } from 'interfaces/form';
 import FaceLogo from 'assets/face-logo.svg';
 import OpenseaSymbol from 'assets/opensea-symbol.svg';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
-import { setRegisterStage } from 'store/modules/modal';
+import { setRegisterStage, setTransactionStage } from 'store/modules/modal';
 import { setUser } from 'store/modules/user';
 import useTimeout from 'hooks/useTimeout';
 import TransactionModal from 'components/organism/TransactionModal';
+import { ethers } from 'ethers';
 
 const Home: NextPage = () => {
   const {
@@ -37,11 +38,26 @@ const Home: NextPage = () => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
   const [
-    isRegisterModalButtonLoading,
-    setIsRegisterModalButtonLoading,
+    isRegisterModalLoginButtonLoading,
+    setIsRegisterModalLoginButtonLoading,
   ] = useState(false);
+  const [
+    isTransactionModalOpenButtonLoading,
+    setIsTransactionModalOpenButtonLoading,
+  ] = useState(false);
+  const [
+    isTransactionModalSendButtonLoading,
+    setIsTransactionModalSendButtonLoading,
+  ] = useState(false);
+  const [accountBalance, setAccountBalance] = useState('');
+  const [transactionAmount, setTransactionAmount] = useState('');
+  const [transactionSendTo, setTransactionSendTo] = useState('');
+  const [transactionFee, setTransactionFee] = useState('');
+  const [transaction, setTransaction] = useState<ethers.providers.TransactionRequest>();
+  const [transactionHash, setTransactionHash] = useState('');
   const NODE_URL = 'https://ropsten.infura.io/v3/2a4f59ea8b174fb7ae9ed6fae1137e59';
   const faceSDK = useMemo(() => new FaceSDK(NODE_URL), []);
+  const provider = new ethers.providers.Web3Provider(faceSDK.getProvider());
 
   useTimeout(() => {
     onCloseRegisterModal();
@@ -86,6 +102,12 @@ const Home: NextPage = () => {
     verifyEmail();
   }, [verifyEmail]);
 
+  useEffect(() => {
+    // 이부분을 바꾸면 transaction address 와 amount 가 변경됩니다.
+    setTransactionSendTo('0x5D5AA22d586b7904B2D348fad79b1eA3D0eeb520');
+    setTransactionAmount('0.123456');
+  }, []);
+
   const onCloseRegisterModal = () => {
     registerFormReset();
     setIsRegisterModalOpen(false);
@@ -108,11 +130,11 @@ const Home: NextPage = () => {
       return;
     }
 
-    setIsRegisterModalButtonLoading(true);
+    setIsRegisterModalLoginButtonLoading(true);
 
     setTimeout(() => {
       registerFormClearErrors('email');
-      setIsRegisterModalButtonLoading(false);
+      setIsRegisterModalLoginButtonLoading(false);
       dispatch(setRegisterStage('verification'));
     }, 500);
   };
@@ -133,12 +155,59 @@ const Home: NextPage = () => {
     }
   };
 
+  const onClickSendTransactionButton = async () => {
+    setIsTransactionModalOpenButtonLoading(true);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
+    const balance = ethers.utils.formatEther(await provider.getBalance(address));
+    const gasPrice = await provider.getGasPrice();
+    const txRequest = {
+      to: transactionSendTo,
+      value: ethers.utils.parseEther(transactionAmount),
+    };
+    const tx = await signer.populateTransaction(txRequest);
+    const gasUnits = await provider.estimateGas(tx);
+    const feeGwei = gasPrice.mul(gasUnits);
+    const feeEth = ethers.utils.formatUnits(feeGwei, 'ether');
+
+    setAccountBalance(balance);
+    setTransactionFee(feeEth);
+    setTransaction(tx);
+    setIsTransactionModalOpen(true);
+    setIsTransactionModalOpenButtonLoading(false);
+  };
+
+  const onClickTransactionModalSendButton = async () => {
+    setIsTransactionModalSendButtonLoading(true);
+    const signer = provider.getSigner();
+
+    if (transaction) {
+      const tx = await signer.sendTransaction(transaction);
+      setTransactionHash(tx.hash);
+
+      dispatch(setTransactionStage('processing'));
+      const receipt = await tx.wait();
+
+      console.log('receipt', receipt);
+      setIsRegisterModalLoginButtonLoading(false);
+
+      if (receipt.status) {
+        dispatch(setTransactionStage('complete'));
+      }
+    }
+  };
+
   return (
     <>
       <MainSection>
         <Title>Hello! This is Face Wallet</Title>
         <StyledButton onClick={() => setIsRegisterModalOpen(true)}>회원가입</StyledButton>
-        <StyledButton onClick={() => setIsTransactionModalOpen(true)}>트랜잭션 전송</StyledButton>
+        <StyledButton
+          onClick={onClickSendTransactionButton}
+          isLoading={isTransactionModalOpenButtonLoading}
+        >
+          트랜잭션 전송
+        </StyledButton>
         <SecuredByContainer>
           <SecuredByText>Secured By</SecuredByText>
           <FaceLogo width={99} height={12} />
@@ -154,10 +223,10 @@ const Home: NextPage = () => {
           register={registerFormRegister}
           errors={registerFormErrors}
           onClickButton={onClickRegisterLoginModalButton}
-          isButtonLoading={isRegisterModalButtonLoading}
+          isButtonLoading={isRegisterModalLoginButtonLoading}
         />
         <RegisterModal.Verification
-          isButtonLoading={isRegisterModalButtonLoading}
+          isButtonLoading={isRegisterModalLoginButtonLoading}
           register={registerFormRegister}
           errors={registerFormErrors}
           onClickButton={onClickRegisterVerificationButton}
@@ -169,6 +238,32 @@ const Home: NextPage = () => {
         />
         <RegisterModal.Success />
       </RegisterModal>
+      <TransactionModal
+        isOpen={isTransactionModalOpen}
+        onClose={() => setIsTransactionModalOpen(false)}
+        serviceSymbol={<OpenseaSymbol width={48} height={48} />}
+      >
+        <TransactionModal.Send
+          balance={accountBalance}
+          amount={transactionAmount}
+          to={transactionSendTo}
+          fee={transactionFee}
+          isButtonLoading={isTransactionModalSendButtonLoading}
+          onClickButton={onClickTransactionModalSendButton}
+        />
+        <TransactionModal.Processing
+          amount={transactionAmount}
+          to={transactionSendTo}
+          fee={transactionFee}
+          hash={transactionHash}
+        />
+        <TransactionModal.Complete
+          amount={transactionAmount}
+          to={transactionSendTo}
+          fee={transactionFee}
+          hash={transactionHash}
+        />
+      </TransactionModal>
     </>
   );
 };
@@ -187,6 +282,7 @@ const Title = styled.h1`
   font-weight: 700;
   font-size: 24px;
   line-height: 36px;
+  margin-bottom: ${({ theme }) => theme.spacing.medium['2']};
 `;
 
 const StyledButton = styled(Button)`
