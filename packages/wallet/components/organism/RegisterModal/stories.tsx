@@ -16,7 +16,7 @@ export default {
   },
 } as ComponentMeta<typeof RegisterModal>;
 
-const LoginTemplate: ComponentStory<typeof RegisterModal> = (args) => {
+const Template: ComponentStory<typeof RegisterModal> = (args) => {
   const dispatch = useAppDispatch();
   const { register, watch, formState: { errors } } = useForm<RegisterFields>({
     defaultValues: {
@@ -41,7 +41,7 @@ const LoginTemplate: ComponentStory<typeof RegisterModal> = (args) => {
   );
 };
 
-export const Default = LoginTemplate.bind({});
+export const Default = Template.bind({});
 Default.argTypes = {
   onClose: {
     action: 'closed',

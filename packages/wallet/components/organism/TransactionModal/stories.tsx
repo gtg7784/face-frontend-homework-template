@@ -14,7 +14,7 @@ export default {
   },
 } as ComponentMeta<typeof TransactionModal>;
 
-const LoginTemplate: ComponentStory<typeof TransactionModal> = (args) => {
+const Template: ComponentStory<typeof TransactionModal> = (args) => {
   const { transactionStage: stage } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
 
@@ -50,7 +50,7 @@ const LoginTemplate: ComponentStory<typeof TransactionModal> = (args) => {
   );
 };
 
-export const Default = LoginTemplate.bind({});
+export const Default = Template.bind({});
 Default.argTypes = {
   onClose: {
     action: 'closed',
