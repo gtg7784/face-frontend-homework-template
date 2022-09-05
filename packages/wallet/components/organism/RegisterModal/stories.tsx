@@ -1,6 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import OpenseaSymbol from 'assets/opensea-symbol.svg';
 import { useAppDispatch } from 'hooks/store';
+import useTimeout from 'hooks/useTimeout';
 import { RegisterFields } from 'interfaces/form';
 import { useForm } from 'react-hook-form';
 import { setRegisterStage } from 'store/modules/modal';
@@ -25,6 +26,9 @@ const LoginTemplate: ComponentStory<typeof RegisterModal> = (args) => {
       passwordConfirmation: '',
     },
   });
+  useTimeout(() => {
+    dispatch(setRegisterStage('password'));
+  }, watch('verificationCode').length === 6 ? 500 : null);
   return (
     <div>
       <RegisterModal {...args}>
@@ -37,9 +41,19 @@ const LoginTemplate: ComponentStory<typeof RegisterModal> = (args) => {
   );
 };
 
-export const Login = LoginTemplate.bind({});
-Login.argTypes = {
+export const Default = LoginTemplate.bind({});
+Default.argTypes = {
   onClose: {
     action: 'closed',
   },
+  initialStage: {
+    control: {
+      type: 'select',
+      options: ['login', 'verification', 'password', 'success'],
+    },
+  },
+};
+
+Default.args = {
+  initialStage: 'login',
 };
