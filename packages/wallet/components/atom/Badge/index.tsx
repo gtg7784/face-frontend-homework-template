@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const Badge = ({ text, isValid }: IProps) => (
-  <Container isValid={isValid}>
+  <Container isValid={isValid} data-testid="components/atom/Badge">
     {text}
   </Container>
 );
