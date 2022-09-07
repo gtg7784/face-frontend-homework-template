@@ -8,14 +8,12 @@ interface IProps {
 }
 
 const ModalHeader = ({ serviceSymbol, isServiceSymbolCentered, onClose }: IProps) => (
-  <Container>
-    <>
-      {isServiceSymbolCentered && <Spacing />}
-      {serviceSymbol}
-      <CloseButton onClick={onClose}>
-        <StyledCloseIcon />
-      </CloseButton>
-    </>
+  <Container data-testid="components/molecule/ModalHeader">
+    {isServiceSymbolCentered && <Spacing />}
+    {serviceSymbol}
+    <CloseButton onClick={onClose} data-testid="components/molecule/ModalHeader/CloseButton">
+      <StyledCloseIcon />
+    </CloseButton>
   </Container>
 );
 
