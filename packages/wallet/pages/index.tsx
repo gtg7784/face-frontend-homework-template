@@ -1,5 +1,8 @@
 import {
-  useCallback, useEffect, useMemo, useState,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
 } from 'react';
 import type { NextPage } from 'next';
 import styled from 'styled-components';
@@ -188,7 +191,6 @@ const Home: NextPage = () => {
       dispatch(setTransactionStage('processing'));
       const receipt = await tx.wait();
 
-      console.log('receipt', receipt);
       setIsRegisterModalLoginButtonLoading(false);
 
       if (receipt.status) {
