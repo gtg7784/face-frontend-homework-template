@@ -22,16 +22,17 @@ const Input = forwardRef<HTMLInputElement, PropsWithChildren<IProps>>(({
   className,
   ...props
 }, ref) => (
-  <Container className={className} disabled={disabled} onClick={onClick}>
+  <Container className={className} disabled={disabled} onClick={onClick} data-testid="components/atom/Input">
     <StyledInput
       ref={ref}
       type={type}
       value={value}
       placeholder={placeholder}
       disabled={disabled}
+      data-testid="components/atom/Input/Input"
       {...props}
     />
-    <RightSection>
+    <RightSection data-testid="components/atom/Input/RightSection">
       {children}
     </RightSection>
   </Container>
