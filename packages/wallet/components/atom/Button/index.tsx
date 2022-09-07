@@ -16,9 +16,10 @@ const Button = ({
   <Container
     onClick={onClick}
     disabled={disabled || isLoading}
+    data-testid="components/atom/Button"
     {...props}
   >
-    {isLoading && (<StyledSyncIcon />)}
+    {isLoading && (<StyledSyncIcon data-testid="components/atom/Button/SyncIcon" />)}
     {children}
   </Container>
 );
