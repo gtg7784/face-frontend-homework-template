@@ -7,9 +7,9 @@ interface IProps {
 }
 
 const Tooltip = ({ message, children, ...props }: PropsWithChildren<IProps>) => (
-  <Container {...props}>
+  <Container {...props} data-testid="components/atom/Tooltip">
     {children}
-    <Message>{message}</Message>
+    <Message data-testid="components/atom/Tooltip/Message">{message}</Message>
   </Container>
 );
 
