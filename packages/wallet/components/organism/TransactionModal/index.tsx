@@ -109,7 +109,7 @@ const Send = ({
     <>
       <Title>Send</Title>
       <Title isMultiple hasError={insufficientFund > 0}>
-        0.125801
+        {balance}
         <TitleETH>ETH</TitleETH>
       </Title>
       <AvailableBalanceRow>
