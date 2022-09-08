@@ -12,7 +12,18 @@ const AllTheProviders = ({ children }: React.PropsWithChildren) => (
 const customRender = (
   ui: React.ReactElement,
   options: RenderOptions,
-) => render(ui, { wrapper: AllTheProviders, ...options });
+) => {
+  const { wrapper: Wrapper, ...opts } = options;
+
+  return render(ui, {
+    wrapper: ({ children }) => (
+      <AllTheProviders>
+        {Wrapper ? <Wrapper>{children}</Wrapper> : children}
+      </AllTheProviders>
+    ),
+    ...opts,
+  });
+};
 
 // re-export everything
 export * from '@testing-library/react';
