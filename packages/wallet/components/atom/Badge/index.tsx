@@ -26,7 +26,7 @@ const Container = styled.div<{ isValid: boolean }>`
   color: ${({ isValid, theme }) => (
     isValid
       ? theme.colors.primary.main
-      : theme.colors.bluegrey.dark
+      : theme.colors.mediumgrey.dark
   )};
 `;
 
