@@ -31,6 +31,7 @@ import {
   ResendCodeText,
   ResendCodeTextLink,
   StyledVisibilityIcon,
+  StyledSyncIcon,
 } from './styles';
 
 interface IProps {
@@ -80,6 +81,7 @@ const RegisterModal = ({
     </Modal>
   );
 };
+
 const Login = ({
   isButtonLoading,
   errors,
@@ -100,11 +102,17 @@ const Login = ({
         placeholder="satoshi@facewallet.xyz"
         {...register('email', { required: true })}
         type="email"
+        data-testid="components/organism/RegisterModal/Login/EmailInput"
       />
       {errors.email?.message && (
         <ErrorMessage>{errors.email?.message}</ErrorMessage>
       )}
-      <StyledButton onClick={onClickButton} disabled={!watch('email')} isLoading={isButtonLoading}>
+      <StyledButton
+        onClick={onClickButton}
+        disabled={!watch('email')}
+        isLoading={isButtonLoading}
+        data-testid="components/organism/RegisterModal/Login/Button"
+      >
         Sign up / Login
       </StyledButton>
       <TermsText>
@@ -132,6 +140,7 @@ const Login = ({
 const Verification = ({
   onClickButton,
   register,
+  watch,
   errors,
 }: IModalContentProps) => {
   const dispatch = useAppDispatch();
@@ -146,7 +155,7 @@ const Verification = ({
     ));
   }, stage === 'verification' ? 1000 : null);
 
-  if (stage !== 'verification' || !errors) {
+  if (stage !== 'verification' || !errors || !watch) {
     return null;
   }
 
@@ -170,11 +179,20 @@ const Verification = ({
         timerSecond > 0
           ? (
             <StyledInput placeholder="Enter verification code" {...register('verificationCode')}>
-              <TimerText>
-                {Math.floor(timerSecond / 60).toString().padStart(2, '0')}
-                :
-                {(timerSecond % 60).toString().padStart(2, '0')}
-              </TimerText>
+              {
+                watch('verificationCode').length === 6
+                  ? (
+                    <StyledSyncIcon />
+                  )
+                  : (
+
+                    <TimerText>
+                      {Math.floor(timerSecond / 60).toString().padStart(2, '0')}
+                      :
+                      {(timerSecond % 60).toString().padStart(2, '0')}
+                    </TimerText>
+                  )
+              }
             </StyledInput>
           )
           : (
@@ -240,17 +258,17 @@ const Password = ({
       <StyledInput placeholder="Re-enter password" type={isPasswordConfirmationVisible ? 'text' : 'password'} {...register('passwordConfirmation')} isMultiple>
         <StyledVisibilityIcon onClick={onClickPasswordConfirmationVisibility} />
       </StyledInput>
+      <BadgeContainer>
+        {Object.keys(passwordCondition).map((key) => (
+          <Badge key={key} isValid={passwordCondition[key]} text={key} />
+        ))}
+      </BadgeContainer>
       <StyledButton
         onClick={onClickButton}
         disabled={!Object.values(passwordCondition).every((v) => v)}
       >
         Sign up
       </StyledButton>
-      <BadgeContainer>
-        {Object.keys(passwordCondition).map((key) => (
-          <Badge key={key} isValid={passwordCondition[key]} text={key} />
-        ))}
-      </BadgeContainer>
       <SecuredByContainer>
         <SecuredByText>Secured By</SecuredByText>
         <FaceLogo width={99} height={12} />

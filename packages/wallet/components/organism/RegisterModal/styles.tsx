@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import SyncIcon from '@mui/icons-material/Sync';
 import Input from 'components/atom/Input';
 import Button from 'components/atom/Button';
 import * as textStyle from 'styles/text';
@@ -64,8 +65,8 @@ export const StyledEditIcon = styled(EditIcon)`
 `;
 
 export const StyledVisibilityIcon = styled(VisibilityIcon)`
-  width: 16px !important;
-  height: 16px !important;
+  width: 24px !important;
+  height: 24px !important;
   color: ${({ theme }) => theme.colors.bluegrey.dark};
 `;
 
@@ -120,4 +121,22 @@ export const BadgeContainer = styled.div`
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing.small['1']};
   margin-top: ${({ theme }) => theme.spacing.small['2']};
+`;
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const StyledSyncIcon = styled(SyncIcon)`
+  width: 24px !important;
+  height: 24px !important;
+  animation: ${rotate} 1s linear infinite;
+  margin-right: ${({ theme }) => theme.spacing.small['2']};
+  color: ${({ theme }) => theme.colors.primary.main};
 `;
