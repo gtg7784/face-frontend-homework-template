@@ -4,9 +4,8 @@ import reset from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
   ${reset}
   * {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    box-sizing: border-box;
+    font-family: 'Inter', sans-serif !important;
+    box-sizing: border-box !important;
   }
   html, body, #__next {
     margin: 0;
