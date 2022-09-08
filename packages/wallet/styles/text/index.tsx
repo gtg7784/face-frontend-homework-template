@@ -1,7 +1,6 @@
 import { css } from 'styled-components';
 
 export const h3 = css`
-  width: 100%;
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
