@@ -85,7 +85,9 @@ const Home: NextPage = () => {
           registerFormSetError(name, { message: 'Invalid code.' });
         } else {
           registerFormClearErrors();
-          dispatch(setRegisterStage('password'));
+          setTimeout(() => {
+            dispatch(setRegisterStage('password'));
+          }, 500);
         }
       }
     });
@@ -228,6 +230,7 @@ const Home: NextPage = () => {
           isButtonLoading={isRegisterModalLoginButtonLoading}
         />
         <RegisterModal.Verification
+          watch={registerFormWatch}
           isButtonLoading={isRegisterModalLoginButtonLoading}
           register={registerFormRegister}
           errors={registerFormErrors}
