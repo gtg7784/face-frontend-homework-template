@@ -98,7 +98,7 @@ const Send = ({
   const [insufficientFund, setInsufficientFund] = useState(0);
 
   useEffect(() => {
-    setInsufficientFund(parseFloat(balance) - parseFloat(amount) - parseFloat(fee));
+    setInsufficientFund(parseFloat(amount) + parseFloat(fee) - parseFloat(balance));
   }, [balance, amount, fee]);
 
   if (stage !== 'send') {
@@ -108,7 +108,7 @@ const Send = ({
   return (
     <>
       <Title>Send</Title>
-      <Title isMultiple hasError={insufficientFund < 0}>
+      <Title isMultiple hasError={insufficientFund > 0}>
         0.125801
         <TitleETH>ETH</TitleETH>
       </Title>
@@ -154,7 +154,7 @@ const Send = ({
         </TransactionInfoRow>
       </TransactionInfo>
       {
-        insufficientFund < 0 && (
+        insufficientFund > 0 && (
           <ErrorMessage>
             Insufficient funds
             {' '}
@@ -166,7 +166,7 @@ const Send = ({
       }
       <StyledButton
         onClick={onClickButton}
-        disabled={insufficientFund < 0}
+        disabled={insufficientFund > 0}
         isLoading={isButtonLoading}
       >
         Confirm
