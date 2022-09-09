@@ -31,7 +31,7 @@ describe('components/atom/Badge', () => {
 
     expect(queryByTestId('components/atom/Badge')).toHaveStyle(`
       background: ${theme.colors.bluegrey.pale};
-      color: ${theme.colors.bluegrey.dark};
+      color: ${theme.colors.mediumgrey.dark};
     `);
   });
 });
