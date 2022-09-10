@@ -24,3 +24,18 @@ http://localhost:3000 에서 샘플 DApp을 확인할 수 있습니다.
 cd packages/sampledapp
 npm run dev
 ```
+
+## @face/wallet 실행
+
+다음 명령어를 통해 `@face/wallet` 을 실행합니다.
+```sh
+cd packages/wallet
+npm run dev
+```
+
+
+http://localhost:3000 에서 `@face/wallet` 을 확인할 수 있습니다.
+`회원가입` 버튼을 누르면 회원가입 창이 뜨고
+`트랜잭션 전송` 버튼을 누르면 트랜잭션 전송이 이뤄집니다.
+
+더 자세한 내용이 궁금하다면, [@face/wallet/README.md](./packages/wallet/README.md) 를 참고해주세요.
