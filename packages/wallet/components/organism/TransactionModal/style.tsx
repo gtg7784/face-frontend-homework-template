@@ -46,7 +46,7 @@ export const AvailableBalanceLabel = styled.span`
 `;
 
 export const AvailableBalanceValue = styled.span`
-  word-spacing: 5px;
+  word-spacing: 6px;
   word-break: keep-all;
   ${textStyle.body2Medium}
   color: ${({ theme }) => theme.colors.darkgrey.sub};

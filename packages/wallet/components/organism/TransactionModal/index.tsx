@@ -108,8 +108,12 @@ const Send = ({
   return (
     <>
       <Title>Send</Title>
-      <Title isMultiple hasError={insufficientFund > 0}>
-        {balance}
+      <Title
+        isMultiple
+        hasError={insufficientFund > 0}
+        data-testid="components/organism/TransactionModal/Send/TitleAmount"
+      >
+        {amount}
         <TitleETH>ETH</TitleETH>
       </Title>
       <AvailableBalanceRow>
